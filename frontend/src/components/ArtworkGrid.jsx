@@ -1,7 +1,9 @@
 // ─── ArtworkGrid ───────────────────────────────────────────────────────────
 // Responsive masonry-style grid of artwork cards. Shows skeletons while loading.
 
+import { useState } from "react";
 import ArtworkCard from "./ArtworkCard.jsx";
+import ArtworkModal from "./ArtworkModal.jsx";
 
 const SkeletonCard = () => (
   <div className="rounded-xl overflow-hidden border border-sandlewood/10">
@@ -21,6 +23,8 @@ const ArtworkGrid = ({
   onEdit,
   emptyMessage = "No artwork posted yet.",
 }) => {
+  const [selectedPost, setSelectedPost] = useState(null);
+
   if (isLoading) {
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -45,17 +49,23 @@ const ArtworkGrid = ({
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-      {posts.map((post) => (
-        <ArtworkCard
-          key={post._id}
-          post={post}
-          isDashboard={isDashboard}
-          onDelete={onDelete}
-          onEdit={onEdit}
-        />
-      ))}
-    </div>
+    <>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        {posts.map((post) => (
+          <ArtworkCard
+            key={post._id}
+            post={post}
+            isDashboard={isDashboard}
+            onDelete={onDelete}
+            onEdit={onEdit}
+            onClick={setSelectedPost}
+          />
+        ))}
+      </div>
+      {selectedPost && (
+        <ArtworkModal post={selectedPost} onClose={() => setSelectedPost(null)} />
+      )}
+    </>
   );
 };
 

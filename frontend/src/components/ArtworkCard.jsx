@@ -3,7 +3,7 @@
 
 import { useState, useRef, useEffect } from "react";
 
-const ArtworkCard = ({ post, isDashboard = false, onDelete, onEdit }) => {
+const ArtworkCard = ({ post, isDashboard = false, onDelete, onEdit, onClick }) => {
   const isMounted = useRef(true);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -27,7 +27,10 @@ const ArtworkCard = ({ post, isDashboard = false, onDelete, onEdit }) => {
   };
 
   return (
-    <div className="group relative rounded-xl overflow-hidden border border-sandlewood/10 bg-carbon-light/40 hover:border-sandlewood/30 transition-all duration-300 hover:shadow-brand-md animate-fade-in">
+    <div 
+      className="group relative rounded-xl overflow-hidden border border-sandlewood/10 bg-carbon-light/40 hover:border-sandlewood/30 transition-all duration-300 hover:shadow-brand-md animate-fade-in cursor-pointer"
+      onClick={() => onClick?.(post)}
+    >
       {/* Image */}
       <div className="relative aspect-square overflow-hidden">
         {!imageLoaded && (
@@ -46,7 +49,10 @@ const ArtworkCard = ({ post, isDashboard = false, onDelete, onEdit }) => {
         {isDashboard && (
           <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200 translate-y-2 group-hover:translate-y-0">
             <button
-              onClick={() => onEdit(post)}
+              onClick={(e) => {
+                e.stopPropagation();
+                onEdit(post);
+              }}
               className="p-2 rounded-lg bg-sandlewood/90 hover:bg-sandlewood text-almond backdrop-blur-sm transition-all duration-200 hover:shadow-gold-glow"
               title="Edit post"
             >
@@ -55,7 +61,10 @@ const ArtworkCard = ({ post, isDashboard = false, onDelete, onEdit }) => {
               </svg>
             </button>
             <button
-              onClick={handleDelete}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDelete();
+              }}
               disabled={deleting}
               className={`p-2 rounded-lg backdrop-blur-sm transition-all duration-200 ${
                 confirmDelete
