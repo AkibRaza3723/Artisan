@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base Styles ──────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    --color-carbon: 255 245 245;
+    --color-carbon-light: 255 255 255;
+    --color-carbon-dark: 255 230 230;
+    --color-almond: 45 40 32;
+    --color-almond-light: 74 66 53;
+    --color-almond-dark: 26 23 19;
+    --color-plum: 142 74 95;
+    --color-plum-light: 167 92 115;
+    --color-plum-dark: 110 56 72;
+    --color-sandlewood: 192 165 124;
+    --color-sandlewood-light: 212 185 144;
+    --color-sandlewood-dark: 159 133 96;
+    
+    --bg-grad-top: rgba(142, 74, 95, 0.1);
+    --bg-grad-bottom: rgba(192, 165, 124, 0.1);
+    
+    --gradient-brand: linear-gradient(135deg, rgb(var(--color-plum)) 0%, rgb(var(--color-carbon)) 50%, rgb(var(--color-plum)) 100%);
+    --gradient-gold: linear-gradient(135deg, rgb(var(--color-sandlewood)) 0%, rgb(var(--color-almond)) 100%);
+  }
+
+  :root.dark {
+    --color-carbon: 16 18 17;
+    --color-carbon-light: 30 33 32;
+    --color-carbon-dark: 10 11 10;
+    --color-almond: 231 212 187;
+    --color-almond-light: 242 233 218;
+    --color-almond-dark: 207 192 163;
+    --color-plum: 72 37 47;
+    --color-plum-light: 94 48 64;
+    --color-plum-dark: 50 26 33;
+    --color-sandlewood: 133 120 97;
+    --color-sandlewood-light: 160 146 120;
+    --color-sandlewood-dark: 107 96 80;
+    
+    --bg-grad-top: rgba(72, 37, 47, 0.15);
+    --bg-grad-bottom: rgba(133, 120, 97, 0.08);
+
+    --gradient-brand: linear-gradient(135deg, rgb(var(--color-plum)) 0%, rgb(var(--color-carbon)) 50%, rgb(var(--color-plum)) 100%);
+    --gradient-gold: linear-gradient(135deg, rgb(var(--color-sandlewood)) 0%, rgb(var(--color-almond)) 100%);
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-carbon text-almond font-sans antialiased transition-colors duration-300;
+    background-image: radial-gradient(ellipse at top left, var(--bg-grad-top) 0%, transparent 60%),
+                      radial-gradient(ellipse at bottom right, var(--bg-grad-bottom) 0%, transparent 60%);
+    min-height: 100vh;
+  }
+
+  h1, h2, h3 {
+    @apply font-display;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-carbon; }
+  ::-webkit-scrollbar-thumb { @apply bg-sandlewood rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-sandlewood-light; }
+}
+
+/* ── Component Classes ────────────────────────────────────────────── */
+@layer components {
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3
+           bg-plum hover:bg-plum-light text-almond font-medium rounded-lg
+           border border-sandlewood/30 hover:border-sandlewood/60
+           transition-all duration-200 hover:shadow-brand-md
+           active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3
+           bg-transparent hover:bg-sandlewood/10 text-almond font-medium rounded-lg
+           border border-sandlewood/40 hover:border-sandlewood
+           transition-all duration-200 active:scale-95;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2
+           bg-red-900/40 hover:bg-red-900/70 text-red-300 font-medium rounded-lg
+           border border-red-800/50 hover:border-red-700
+           transition-all duration-200 active:scale-95 text-sm;
+  }
+
+  /* Inputs */
+  .input-field {
+    @apply w-full px-4 py-3 rounded-lg font-sans text-sm
+           bg-carbon-light border border-sandlewood/20
+           text-almond placeholder-almond/30
+           focus:outline-none focus:border-sandlewood/70 focus:ring-1 focus:ring-sandlewood/30
+           transition-all duration-200;
+  }
+
+  .input-label {
+    @apply block text-xs font-semibold uppercase tracking-widest text-sandlewood mb-2;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-carbon-light/60 border border-sandlewood/10 rounded-xl
+           backdrop-blur-sm p-6;
+  }
+
+  .card-hover {
+    @apply card hover:border-sandlewood/30 hover:shadow-brand-md
+           transition-all duration-300 cursor-pointer;
+  }
+
+  /* Glass panel */
+  .glass-panel {
+    @apply bg-plum/10 border border-sandlewood/15 rounded-xl
+           backdrop-blur-md;
+  }
+
+  /* Section headings */
+  .section-title {
+    @apply text-2xl md:text-3xl font-display font-bold text-almond;
+  }
+
+  .section-subtitle {
+    @apply text-sm font-sans text-almond/50 uppercase tracking-widest;
+  }
+
+  /* Tag badge */
+  .tag-badge {
+    @apply inline-block px-2 py-0.5 text-xs rounded-full
+           bg-sandlewood/20 text-sandlewood border border-sandlewood/30;
+  }
+
+  /* Loading skeleton */
+  .skeleton {
+    @apply rounded-lg bg-sandlewood/10 animate-shimmer;
+    background: linear-gradient(90deg, var(--bg-grad-bottom) 25%, rgba(133,120,97,0.16) 50%, var(--bg-grad-bottom) 75%);
+    background-size: 200% 100%;
+  }
+}
+
+/* ── Utilities ────────────────────────────────────────────────────── */
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, rgb(var(--color-almond)) 0%, rgb(var(--color-sandlewood)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .border-gradient {
+    border-image: linear-gradient(135deg, rgb(var(--color-sandlewood)), rgb(var(--color-plum))) 1;
+  }
+}
