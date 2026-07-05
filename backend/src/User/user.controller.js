@@ -19,7 +19,7 @@ import jwt from "jsonwebtoken";
 const cookieOptions = {
   httpOnly: true,  // Not accessible via document.cookie
   secure: process.env.NODE_ENV === "production",
-  sameSite: "Strict",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 };
 
 // ── Helper: generate both tokens and save refresh token to DB ───────────
